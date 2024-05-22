@@ -8,5 +8,9 @@ function WeatherInfo({ weatherData, cityName }) {
                     typeof weatherData.main == "undefined" ? (
                         <p>No data found</p>
                     ) : (
+                      <>
+                            <h3>{weatherData.main.temp}<sup>o</sup> Cel</h3>
+                            <hr />
+
 
             }
