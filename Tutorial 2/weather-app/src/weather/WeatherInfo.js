@@ -15,6 +15,11 @@ function WeatherInfo({ weatherData, cityName }) {
               <div className="col-sm-4">{weatherData.main.temp_max}<sup>o</sup> Cel<br /><b>Max Temp</b>
               </div>
               <div className="col-sm-4">{weatherData.main.temp_min}<sup>o</sup> Cel<br /><b>Min Temp</b>
+              </div>
+                                <div className="col-sm-4">{weatherData.main.humidity}%<br /><b>Humidity</b></div>
+
+                            </div>
+
 
 
             }
