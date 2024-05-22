@@ -8,7 +8,7 @@ function WeatherInfo({ weatherData, cityName }) {
         typeof weatherData.main == "undefined" ? (
           <p>No data found</p>
         ) : (
-                      <>
+          <>
             <h3>{weatherData.main.temp}<sup>o</sup> Cel</h3>
             <hr />
             <div className="row">
@@ -16,9 +16,16 @@ function WeatherInfo({ weatherData, cityName }) {
               </div>
               <div className="col-sm-4">{weatherData.main.temp_min}<sup>o</sup> Cel<br /><b>Min Temp</b>
               </div>
-                                <div className="col-sm-4">{weatherData.main.humidity}%<br /><b>Humidity</b></div>
+              <div className="col-sm-4">{weatherData.main.humidity}%<br /><b>Humidity</b></div>
 
-                            </div>
+            </div>
+          </div>
+    </>
+  )
+}
+
+            </div >
+
 
 
 
