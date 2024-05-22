@@ -25,7 +25,11 @@ function WeatherInfo({ weatherData, cityName }) {
 }
 
             </div >
+   </>
+  );
+}
 
+export default WeatherInfo;
 
 
 
