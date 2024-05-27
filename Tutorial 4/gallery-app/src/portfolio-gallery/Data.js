@@ -2,7 +2,7 @@ const data = [
     {
         id: 1,
         image: "./images/html.jpg",
-        title: "HTML Tutoril",
+        title: "HTML Tutorial",
         description: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. ",
         category: "frontend",
 
