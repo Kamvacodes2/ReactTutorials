@@ -8,12 +8,14 @@ import Profile from "./pages/Profile";
 import SignUp from "./pages/SignUp";
 import Offers from "./pages/Offers";
 import ForgotPassword from "./pages/ForgotPassword";
+import Header from "./components/Header";
 
 
 function App() {
   return (
     <div>
         <Router>
+          <Header/>
           <Routes>
             <Route path="/" Component={Home}/>
             <Route path="/profile" Component={Profile}/>
