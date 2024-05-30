@@ -9,22 +9,35 @@ import SignUp from "./pages/SignUp";
 import Offers from "./pages/Offers";
 import ForgotPassword from "./pages/ForgotPassword";
 import Header from "./components/Header";
-
+import { ToastContainer } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
 
 function App() {
   return (
     <div>
-        <Router>
-          <Header/>
-          <Routes>
-            <Route path="/" Component={Home}/>
-            <Route path="/profile" Component={Profile}/>
-            <Route path="/sign-in" Component={SignIn}/>
-            <Route path="/sign-up" Component={SignUp}/>
-            <Route path="/forgot-password" Component={ForgotPassword}/>
-            <Route path="/offers" Component={Offers}/>
-          </Routes>
-        </Router>
+      <Router>
+        <Header />
+        <Routes>
+          <Route path="/" Component={Home} />
+          <Route path="/profile" Component={Profile} />
+          <Route path="/sign-in" Component={SignIn} />
+          <Route path="/sign-up" Component={SignUp} />
+          <Route path="/forgot-password" Component={ForgotPassword} />
+          <Route path="/offers" Component={Offers} />
+        </Routes>
+      </Router>
+      <ToastContainer
+        position="bottom-center"
+        autoClose={2500}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="dark"
+        transitionBounce/>
     </div>
   );
 }
