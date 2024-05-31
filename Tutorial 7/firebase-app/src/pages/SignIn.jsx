@@ -3,7 +3,7 @@ import { AiFillEyeInvisible, AiFillEye } from "react-icons/ai";
 import { Link, useNavigate } from "react-router-dom";
 import OAuth from "../components/OAuth";
 import { signInWithEmailAndPassword, getAuth } from "firebase/auth";
-// import { toast } from "react-toastify";
+import { toast } from "react-toastify";
 const SignIn = () => {
     const navigate = useNavigate();
     const [showPassword, setShowPassword] = useState(false);
@@ -31,7 +31,7 @@ const SignIn = () => {
                 navigate("/");
             }
         } catch (error) {
-            // toast.error("Bad user credentials");
+            toast.error("Incorrect user credentials");
             console.log(error);
         }
     }
