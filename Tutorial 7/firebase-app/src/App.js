@@ -12,6 +12,7 @@ import ForgotPassword from "./pages/ForgotPassword";
 import Header from "./components/Header";
 import { ToastContainer } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
+import CreateDeal from "./pages/CreateDeal";
 
 function App() {
   return (
@@ -27,6 +28,7 @@ function App() {
           <Route path="/sign-up" Component={SignUp} />
           <Route path="/forgot-password" Component={ForgotPassword} />
           <Route path="/offers" Component={Offers} />
+          <Route path="/create-deal" Component={CreateDeal} />
         </Routes>
       </Router>
       <ToastContainer

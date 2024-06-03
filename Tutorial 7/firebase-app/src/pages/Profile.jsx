@@ -2,8 +2,12 @@ import { getAuth, updateProfile } from "firebase/auth"
 import { useState } from "react"
 import { useNavigate } from "react-router-dom"
 import { doc, updateDoc } from "firebase/firestore";
-import {db} from '../firebase';
+import { Link } from "react-router-dom";
+import { db } from '../firebase';
 import { toast } from "react-toastify";
+import { IoCarSportSharp } from "react-icons/io5";
+
+
 
 export default function Profile() {
     const auth = getAuth()
@@ -27,20 +31,20 @@ export default function Profile() {
 
     }
 
-   async function onSubmit() {
+    async function onSubmit() {
         try {
-           if (auth.currentUser.displayName !== name){
-            //update display name in firebase
-            await updateProfile(auth.currentUser, {
-                displayName: name
-            });
-            //update name in firestore
-            const docRef = doc(db, 'users', auth.currentUser.uid)
-            await updateDoc(docRef, {
-                name
-            })
-           }
-           toast.success('Profile updated successfully')
+            if (auth.currentUser.displayName !== name) {
+                //update display name in firebase
+                await updateProfile(auth.currentUser, {
+                    displayName: name
+                });
+                //update name in firestore
+                const docRef = doc(db, 'users', auth.currentUser.uid)
+                await updateDoc(docRef, {
+                    name
+                })
+            }
+            toast.success('Profile updated successfully')
         } catch (error) {
             toast.error('Something went wrong')
         }
@@ -67,6 +71,11 @@ export default function Profile() {
                             </p>
                         </div>
                     </form>
+                    <button type="submit" className="w-full bg-blue-600 text-white uppercase px-7 py-3 text-sm font-medium rounded shadow-md hover:bg-blue-700 transition duration-150 ease-in-out hover:shadow-lg active:bg-blue-800">
+                        <Link to="/create-deal" className="flex justify-center  items-center">
+                            <IoCarSportSharp className="mr-2 text-3xl bg-green-400 rounded-full p-1 border-2" />Sell your car
+                        </Link>
+                    </button>
                 </div>
             </section>
         </>
