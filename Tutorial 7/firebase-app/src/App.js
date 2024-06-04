@@ -21,14 +21,16 @@ function App() {
         <Header />
         <Routes>
           <Route path="/" Component={Home} />
-          <Route path="/profile" element={<PrivateRoute/>}>
-          <Route path="/profile" Component={Profile} />
+          <Route path="/profile" element={<PrivateRoute />}>
+            <Route path="/profile" Component={Profile} />
           </Route>
           <Route path="/sign-in" Component={SignIn} />
           <Route path="/sign-up" Component={SignUp} />
           <Route path="/forgot-password" Component={ForgotPassword} />
           <Route path="/offers" Component={Offers} />
-          <Route path="/create-deal" Component={CreateDeal} />
+          <Route path="create-deal" element={<PrivateRoute />}>
+            <Route path="/create-deal" Component={CreateDeal} />
+          </Route>
         </Routes>
       </Router>
       <ToastContainer
@@ -42,7 +44,7 @@ function App() {
         draggable
         pauseOnHover
         theme="dark"
-        transitionBounce/>
+        transitionBounce />
     </div>
   );
 }
