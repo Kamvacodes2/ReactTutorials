@@ -1,12 +1,14 @@
 import React, { useState } from 'react'
 import Spinner from '../components/Spinner';
 import { toast } from 'react-toastify';
-import { getStorage, ref, uploadBytesResumable } from "firebase/storage";
+import { getStorage, ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import { getAuth } from 'firebase/auth';
 import { v4 as uuidv4 } from 'uuid';
+import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
+import { db } from '../firebase';
 
 export default function CreateDeal() {
-    const auth = getAuth
+    const auth = getAuth()
     const [formData, setFormData] = useState({
         brand: "",
         model: "",
@@ -58,48 +60,61 @@ export default function CreateDeal() {
                 const storageRef = ref(storage, filename)
                 const uploadTask = uploadBytesResumable(storageRef, image);
                 // Listen for state changes, errors, and completion of the upload.
-                uploadTask.on('state_changed',
+                uploadTask.on(
+                    "state_changed",
                     (snapshot) => {
-                        // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
-                        const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-                        console.log('Upload is ' + progress + '% done');
-                        switch (snapshot.state) {
-                            case 'paused':
-                                console.log('Upload is paused');
-                                break;
-                            case 'running':
-                                console.log('Upload is running');
-                                break;
-                        }
+                      // Observe state change events such as progress, pause, and resume
+                      // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
+                      const progress =
+                        (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+                      console.log("Upload is " + progress + "% done");
+                      switch (snapshot.state) {
+                        case "paused":
+                          console.log("Upload is paused");
+                          break;
+                        case "running":
+                          console.log("Upload is running");
+                          break;
+                        default:
+                          break;
+                      }
                     },
                     (error) => {
-                        // A full list of error codes is available at
-                        // https://firebase.google.com/docs/storage/web/handle-errors
-                        switch (error.code) {
-                            case 'storage/unauthorized':
-                                // User doesn't have permission to access the object
-                                break;
-                            case 'storage/canceled':
-                                // User canceled the upload
-                                break;
-
-                            // ...
-
-                            case 'storage/unknown':
-                                // Unknown error occurred, inspect error.serverResponse
-                                break;
-                        }
-                    })
-                }
-        )}
+                      // Handle unsuccessful uploads
+                      reject(error);
+                    },
+                    () => {
+                      // Handle successful uploads on complete
+                      // For instance, get the download URL: https://firebasestorage.googleapis.com/...
+                      getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+                        res(downloadURL);
+                      });
+                    }
+                  );
+                });
+              }
 
         const imgUrls = await Promise.all([...images].map((image) => storeImage(image)))
             .catch((error) => {
                 setLoading(false)
                 toast.error('Images not uploaded');
+                // console.log(error)
                 return;
             })
+        
+        console.log(imgUrls);
+        const formDataCopy = {
+            ...formData,
+            imgUrls,
+            timestamp: serverTimestamp()
+        }
+        delete formDataCopy.images
+        const docRef = await addDoc(collection(db,"car-deals"), formDataCopy);
+        setLoading(false)
+        toast.success("Car deal created")
     }
+
+
     if (loading) {
         return <Spinner />
     }
