@@ -6,9 +6,11 @@ import { getAuth } from 'firebase/auth';
 import { v4 as uuidv4 } from 'uuid';
 import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
 import { db } from '../firebase';
+import { useNavigate } from "react-router-dom";
 
 export default function CreateDeal() {
-    const auth = getAuth()
+    const auth = getAuth();
+    const navigate = useNavigate();
     const [formData, setFormData] = useState({
         brand: "",
         model: "",
@@ -113,6 +115,7 @@ export default function CreateDeal() {
         const docRef = await addDoc(collection(db,"car-deals"), formDataCopy);
         setLoading(false)
         toast.success("Car deal created")
+        navigate(`/category/${formDataCopy.type}/${docRef.id}`);
     }
 
 
