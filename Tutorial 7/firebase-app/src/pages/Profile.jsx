@@ -98,7 +98,7 @@ export default function Profile() {
                     </button>
                 </div>
             </section>
-            <div className="max-width">
+            <div className="max-w-6xl px-3 mt-6 mx-autoc">
                 {!loading && deals.length > 0 && (
                     <>
                         <h2 className="text-2xl text-center font-semibold">My Car Offers</h2>
