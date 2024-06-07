@@ -1,11 +1,12 @@
 import { getAuth, updateProfile } from "firebase/auth"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom"
-import { doc, updateDoc } from "firebase/firestore";
+import { collection, doc, getDoc, getDocs, orderBy, query, updateDoc, where } from "firebase/firestore";
 import { Link } from "react-router-dom";
 import { db } from '../firebase';
 import { toast } from "react-toastify";
 import { IoCarSportSharp } from "react-icons/io5";
+import ListingItem from "../components/ListingItem";
 
 
 
@@ -13,6 +14,8 @@ export default function Profile() {
     const auth = getAuth()
     const navigate = useNavigate()
     const [changeDetail, setChangeDetail] = useState(false)
+    const [deals, setDeals] = useState(null)
+    const [loading, setLoading] = useState(true)
     const [formData, setFormData] = useState({
         name: auth.currentUser.displayName,
         email: auth.currentUser.email
@@ -28,7 +31,6 @@ export default function Profile() {
         setFormData((prevState) => ({
             ...prevState, [e.target.id]: e.target.value
         }))
-
     }
 
     async function onSubmit() {
@@ -49,6 +51,24 @@ export default function Profile() {
             toast.error('Something went wrong')
         }
     }
+
+    useEffect(() => {
+        async function fetchUserDeal() {
+            const dealsRef = collection(db, "car-deals");
+            const q = query(dealsRef, where("userRef", "==", auth.currentUser.uid), orderBy("timestamp", "desc"));
+            const querySnap = await getDocs(q)
+            let deals = []
+            querySnap.forEach((doc) => {
+                return deals.push({
+                    id: doc.id,
+                    data: doc.data(),
+                });
+            });
+            setDeals(deals)
+            setLoading(false)
+        }
+        fetchUserDeal();
+    }, [auth.currentUser.uid])
     return (
         <>
             <section className="max-w-6xl mx-auto flex justify-center items-center flex-col">
@@ -78,6 +98,18 @@ export default function Profile() {
                     </button>
                 </div>
             </section>
+            <div className="max-width">
+                {!loading && deals.length > 0 && (
+                    <>
+                        <h2 className="text-2xl text-center font-semibold">My Car Offers</h2>
+                        <ul>
+                            {deals.map((deal)=>(
+                                <ListingItem key={deal.id} id={deal.id} deal={deal.data}/>
+                            ))}
+                        </ul>
+                    </>
+                )}
+            </div>
         </>
     )
 }
