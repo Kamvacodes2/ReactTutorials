@@ -1,7 +1,7 @@
 import { getAuth, updateProfile } from "firebase/auth"
 import { useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom"
-import { collection, doc, getDoc, getDocs, orderBy, query, updateDoc, where } from "firebase/firestore";
+import { collection, doc, getDocs, orderBy, query, updateDoc, where } from "firebase/firestore";
 import { Link } from "react-router-dom";
 import { db } from '../firebase';
 import { toast } from "react-toastify";
@@ -11,10 +11,10 @@ import ListingItem from "../components/ListingItem";
 
 
 export default function Profile() {
-    const auth = getAuth()
-    const navigate = useNavigate()
-    const [changeDetail, setChangeDetail] = useState(false)
-    const [deals, setDeals] = useState(null)
+    const auth = getAuth();
+    const navigate = useNavigate();
+    const [changeDetail, setChangeDetail] = useState(false);
+    const [deals, setDeals] = useState(null);
     const [loading, setLoading] = useState(true)
     const [formData, setFormData] = useState({
         name: auth.currentUser.displayName,
@@ -98,7 +98,7 @@ export default function Profile() {
                     </button>
                 </div>
             </section>
-            <div className="max-w-6xl px-3 mt-6 mx-autoc">
+            <div className="max-w-6xl px-3 mt-6 mx-auto">
                 {!loading && deals.length > 0 && (
                     <>
                         <h2 className="text-2xl text-center font-semibold">My Car Offers</h2>
