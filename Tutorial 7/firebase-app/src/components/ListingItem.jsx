@@ -1,8 +1,11 @@
 import React from 'react';
 import { Link } from "react-router-dom"
 import Moment from 'react-moment';
+import { FaTrashAlt } from "react-icons/fa";
+import { MdEdit } from "react-icons/md";
 
-export default function ListingItem({ deal, id }) {
+
+export default function ListingItem({ deal, id, onDelete, onEdit }) {
     return (
         <li className=' relative bg-white flex flex-col justify-between items-center shadow-md hover:shadow-xl rounded-md overflow-hidden
         transition-shadow duration-150'>
@@ -22,6 +25,12 @@ export default function ListingItem({ deal, id }) {
                     </div>
                 </div>
             </Link>
+            {onDelete && (
+                <FaTrashAlt className='absolute bottom-2 right-2 h-[14] cursor-pointer text-red-500' onClick={()=>onDelete(deal.id)}/>
+            )}
+            {onEdit && (
+                <MdEdit className='absolute bottom-2 right-7 h-4 cursor-pointer text-gray-500' onClick={()=>onEdit(deal.id)}/>
+            )}
         </li>
     )
 }
