@@ -1,7 +1,7 @@
 import { getAuth, updateProfile } from "firebase/auth"
 import { useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom"
-import { collection, doc, getDocs, orderBy, query, updateDoc, where } from "firebase/firestore";
+import { collection, deleteDoc, doc, getDocs, orderBy, query, updateDoc, where } from "firebase/firestore";
 import { Link } from "react-router-dom";
 import { db } from '../firebase';
 import { toast } from "react-toastify";
@@ -70,12 +70,19 @@ export default function Profile() {
         fetchUserDeal();
     }, [auth.currentUser.uid])
 
-    function onDelete() {
-
+   async function onDelete(dealID) {
+        if(window.confirm('Are you sure you want to delete?')) {
+            await deleteDoc(doc(db, "car-deals", dealID))
+            const updatedDeals = deals.filter(
+                (deal)=> deal.id !== dealID
+            );
+            setDeals(updatedDeals)
+            toast.success('Successfully deleted')
+        }
     }
     
-    function onEdit() {
-        navigate(``)
+    function onEdit(dealID) {
+        navigate(`/edit-deal/${dealID}`)
     }
 
 
