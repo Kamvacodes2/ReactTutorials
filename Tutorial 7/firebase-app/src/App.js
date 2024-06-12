@@ -13,6 +13,7 @@ import Header from "./components/Header";
 import { ToastContainer } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 import CreateDeal from "./pages/CreateDeal";
+import EditDeal from "./pages/EditDeal";
 
 function App() {
   return (
@@ -30,6 +31,9 @@ function App() {
           <Route path="/offers" Component={Offers} />
           <Route path="create-deal" element={<PrivateRoute />}>
             <Route path="/create-deal" Component={CreateDeal} />
+          </Route>
+          <Route path="edit-deal" element={<PrivateRoute />}>
+            <Route path="/edit-deal:dealID" Component={EditDeal} />
           </Route>
         </Routes>
       </Router>
