@@ -14,6 +14,7 @@ import { ToastContainer } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 import CreateDeal from "./pages/CreateDeal";
 import EditDeal from "./pages/EditDeal";
+import Deal from "./pages/Deal";
 
 function App() {
   return (
@@ -29,6 +30,7 @@ function App() {
           <Route path="/sign-up" Component={SignUp} />
           <Route path="/forgot-password" Component={ForgotPassword} />
           <Route path="/offers" Component={Offers} />
+          <Route path="/category/:categoryType/:dealID" Component={Deal} />
           <Route path="create-deal" element={<PrivateRoute />}>
             <Route path="/create-deal" Component={CreateDeal} />
           </Route>
