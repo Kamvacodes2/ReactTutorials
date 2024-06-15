@@ -21,7 +21,7 @@ export default function ListingItem({ deal, id, onDelete, onEdit }) {
                     <p className='font-bold uppercase'>{deal.type}</p>
                     <p>{`R ${deal.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</p>
                     <div>
-                        <p className='font-bold text-xs'>{`Total kms: ${deal.kms}`}</p>
+                        <p className='font-bold text-xs'>{`Total kms: ${deal.kms.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</p>
                     </div>
                 </div>
             </Link>

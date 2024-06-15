@@ -24,7 +24,6 @@ export default function Slider() {
             querySnap.forEach((doc) => {
                 const data = doc.data();
                 // Logging data for debugging purposes
-                console.log(data);
                 if (data.imgUrls && data.imgUrls.length > 0) {
                     deals.push({
                         id: doc.id,
