@@ -1,7 +1,5 @@
-import React from 'react';
-import { useEffect, useState } from "react";
-import { collection, limit, orderBy, query } from "firebase/firestore";
-import { getDocs } from "firebase/firestore";
+import React, { useEffect, useState } from 'react';
+import { collection, limit, orderBy, query, getDocs } from "firebase/firestore";
 import { db } from "../firebase";
 import Spinner from "../components/Spinner";
 import { Swiper, SwiperSlide } from 'swiper/react';
@@ -23,7 +21,6 @@ export default function Slider() {
             let deals = [];
             querySnap.forEach((doc) => {
                 const data = doc.data();
-                // Logging data for debugging purposes
                 if (data.imgUrls && data.imgUrls.length > 0) {
                     deals.push({
                         id: doc.id,
@@ -50,17 +47,27 @@ export default function Slider() {
     return (
         deals && (
             <>
-                <Swiper slidesPerView={1} navigation pagination={{type:'progressbar'}} effect='fade'
-                modules={EffectFade} autoplay={{delay: 2000}}>
+                <Swiper 
+                    slidesPerView={1} 
+                    navigation 
+                    pagination={{ type: 'progressbar' }} 
+                    effect='fade'
+                    modules={[EffectFade]} 
+                    autoplay={{ delay: 2000 }}
+                >
                     {deals.map((deal, id) => (
                         <SwiperSlide key={id} onClick={() => navigate(`/category/${deal.data.type}/${deal.id}`)}>
-                            <div style={{ background: `url(${deal.data.imgUrls[0]}) center, no-repeat`, backgroundSize: "cover" }}
-                                className='relative w-full h-[300px] overflow-hidden'>
+                            <div className='relative w-full h-[300px] overflow-hidden'>
+                                <img src={deal.data.imgUrls[0]} alt={deal.data.brand} className='w-full h-full object-cover' />
                             </div>
                             <p className='text-[#f1faee] absolute left-1 top-3 font-medium max-w-[90%] bg-[#457b9d]
-                            shadow-lg opacity-90 p-2 rounded'>{deal.data.brand}</p>
+                                shadow-lg opacity-90 p-2 rounded'>
+                                {deal.data.brand}
+                            </p>
                             <p className='text-[#f1faee] absolute left-1 bottom-3 font-semibold max-w-[90%] bg-[#e63946]
-                            shadow-lg opacity-90 p-2 rounded'>R {deal.data.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</p>
+                                shadow-lg opacity-90 p-2 rounded'>
+                                R {deal.data.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+                            </p>
                         </SwiperSlide>
                     ))}
                 </Swiper>
